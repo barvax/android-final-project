@@ -70,6 +70,6 @@ public class CallForHelp {
             }
         }
 
-        return "i have absolutely no idea...";
+        return "i have absolutely no idea....";
     }
 }
