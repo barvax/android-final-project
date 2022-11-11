@@ -60,6 +60,6 @@ public class AchievementFragment extends Fragment {
 
         SharedPreferences pref  = getActivity().getSharedPreferences("achievements" , Context.MODE_PRIVATE);
        int correctAns =  pref.getInt("correctAnswersInt",0);
-        tvCorrectAnswers.setText(String.valueOf(correctAns) ) ;
+        tvCorrectAnswers.setText(String.valueOf(correctAns) +" from achievement fragment") ;
     }
 }

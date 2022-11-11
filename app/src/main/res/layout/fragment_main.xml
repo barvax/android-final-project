@@ -20,54 +20,51 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:adjustViewBounds="false"
         android:scaleType="centerCrop"
-        android:src="@drawable/wood_texture"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/powersave_bg"
+        app:srcCompat="@drawable/powersave_bg"
+        tools:layout_editor_absoluteX="-138dp"
+        tools:layout_editor_absoluteY="32dp"
+        tools:srcCompat="@drawable/powersave_bg" />
 
     <Button
+
         android:id="@+id/nextBtnFragment1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="380dp"
-        android:text="Next"
+        android:backgroundTint="#FF9800"
+
+        android:text="Play!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.191"
         app:layout_constraintStart_toStartOf="parent" />
 
+
     <ImageView
         android:id="@+id/btn_achievement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_foreground"
-        tools:layout_editor_absoluteX="233dp"
-        tools:layout_editor_absoluteY="73dp" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:background="#00FFFFFF"
-        android:scaleType="fitXY"
-        android:src="@drawable/btn"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/play_btn_trophy"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:srcCompat="@drawable/play_btn_trophy" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/architects_daughter"
-        android:text="TextView"
+        android:text="Trivia Master"
         android:textAlignment="center"
         android:textColor="#EAEAEA"
-        android:textSize="20sp"
+        android:textSize="96sp"
         app:layout_constraintBottom_toBottomOf="@+id/message"
         app:layout_constraintEnd_toEndOf="@+id/message"
         app:layout_constraintStart_toStartOf="@+id/message"

@@ -9,15 +9,15 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/woodBackground"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wood_texture"
-        android:contentDescription="@string/woodBackground" />
+        app:srcCompat="@drawable/powersave_bg" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -41,13 +41,14 @@
 
     <ImageView
         android:id="@+id/home_start_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="130dp"
         android:layout_marginTop="32dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:srcCompat="@drawable/btn" />
+        app:srcCompat="@drawable/btn_color_yellow" />
 
     <TextView
         android:id="@+id/textView2"

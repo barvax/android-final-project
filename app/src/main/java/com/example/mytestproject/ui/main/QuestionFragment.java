@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mytestproject.CallForHelp;
 import com.example.mytestproject.DataManager;
@@ -140,7 +141,9 @@ public class QuestionFragment extends Fragment {
         answer4.setText(answers[3]);
 
         helpBtn.setOnClickListener(view -> {
+
             shootHelpAnswers();
+            helpBtn.setEnabled(false);
 
         });
 
@@ -149,13 +152,12 @@ public class QuestionFragment extends Fragment {
             AlertDialog.Builder z = new AlertDialog.Builder(getContext());
             z.setTitle("wow").setMessage( help.friendHelp(getCorrectAnswer()))
                     .setNegativeButton("Exit",((dialogInterface, i) -> {
-
                     }));
+
             AlertDialog dialog = z.create();
             dialog.show();
-
-            Button back = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-
+//            Button back = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        friendBtn.setEnabled(false);
 
         });
 
@@ -174,6 +176,7 @@ public class QuestionFragment extends Fragment {
 
 
     private void onAnswerClicked(){
+
         answersTextView = new TextView []{answer1, answer2, answer3, answer4};
         for (int i = 0; i < answers.length; i++) {
             TextView t = answersTextView[i];
@@ -193,7 +196,22 @@ public class QuestionFragment extends Fragment {
                     disableAnswers();
                 }
                 answersTextView[getCorrectAnswer()].setTextColor(Color.parseColor("#38b01e"));
-                nextQuestionBtn.setEnabled(true);
+                if(questionNum<questions.size()-1){
+                    nextQuestionBtn.setEnabled(true);
+                }else {
+//                    Toast.makeText(getContext(), "end.. enter here final summary", Toast.LENGTH_SHORT).show();
+                    CountDownTimer endSession = new CountDownTimer(3000, 1000) {
+
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        public void onFinish() {
+                            Toast.makeText(getContext(), "ended!", Toast.LENGTH_SHORT).show();
+                        }
+                    }.start();
+                }
+
             });
         }
         nextQuestionBtn.setOnClickListener(view -> {
@@ -233,7 +251,7 @@ public class QuestionFragment extends Fragment {
 
     public void resetAnswersColor(){
         for (int i = 0; i < answers.length; i++) {
-            answersTextView[i].setTextColor(Color.parseColor("#000000"));
+            answersTextView[i].setTextColor(Color.parseColor("#ffffff"));
             answersTextView[i].setEnabled(true);
         }
     }
@@ -252,7 +270,7 @@ public class QuestionFragment extends Fragment {
         if(myTimer!=null){
             myTimer.cancel();
         }
-       myTimer =  new CountDownTimer(30000, 1000) {
+       myTimer =  new CountDownTimer(15000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 timer.setText(String.valueOf (millisUntilFinished / 1000));
@@ -260,6 +278,8 @@ public class QuestionFragment extends Fragment {
 
             public void onFinish() {
                 timer.setText("x");
+                nextQuestion();
+
             }
 
         }.start();

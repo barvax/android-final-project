@@ -60,7 +60,7 @@ public class MainFragment extends Fragment {
        nextBtn.setOnClickListener(view1 ->{
 
            getParentFragmentManager().beginTransaction()
-                   .replace(R.id.container, HomeFragment.newInstance())
+                   .replace(R.id.container, SecondFragment.newInstance())
                    .commitNow();
        } );
 

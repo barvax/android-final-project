@@ -77,7 +77,7 @@ public class SecondFragment extends Fragment {
             RecyclerView recyclerView = view.findViewById(R.id.category_recycle_view);
             CategoriesAdapter adapter = new CategoriesAdapter(categories);
             recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         });
     }

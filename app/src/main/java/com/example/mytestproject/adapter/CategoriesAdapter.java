@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,19 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     ArrayList<String> categories;
     Context context;
     DataManager data;
+    int[] categoryImages = {
+        R.drawable.shome_sub_icon_ranking,
+        R.drawable.btn_ad_icon,
+        R.drawable.art,
+        R.drawable.food_drink,
+        R.drawable.language_small_eng,
+        R.drawable.history,
+        R.drawable.general_knolage,
+        R.drawable.music,
+        R.drawable.science,
+        R.drawable.society,
+        R.drawable.sports
+    };
 
     public CategoriesAdapter(ArrayList<String> categories) {
         this.categories = categories;
@@ -45,7 +59,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String testString = categories.get(position);
     holder.tvCategory.setText(testString);
-    holder.score.setText(String.valueOf(data.getHighScorePerCategory()[position]));
+    holder.score.setText("high score: "+String.valueOf(data.getHighScorePerCategory()[position]));
+    holder.rowImg.setImageResource(categoryImages[position]);
     holder.tvCategory.setOnClickListener(view -> {
 
         DataManager data = DataManager.getDataManager();
@@ -69,10 +84,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView score;
         TextView tvCategory;
+        ImageView rowImg;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCategory = itemView.findViewById(R.id.tv_categoty);
             score = itemView.findViewById(R.id.row_top_score);
+            rowImg = itemView.findViewById(R.id.row_img);
 
         }
 
