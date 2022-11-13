@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class AboutFragment extends Fragment {
     Button btnBack;
     TextView tvAbout;
     TextView tvEmailMe;
+    ImageView emailMe;
 
     public AboutFragment() {
         // Required empty public constructor
@@ -50,26 +52,32 @@ public class AboutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tvAbout = view.findViewById(R.id.tv_about);
-        tvAbout.setText("App Created By Ron Nisenblat");
-        tvEmailMe = view.findViewById(R.id.tv_email);
-        tvEmailMe.setText("Email me Here to: Barvax35@gmail.com");
-        btnBack = view.findViewById(R.id.btn_achievment_back);
         Sounds sounds = new Sounds(getContext());
+        getViews(view);
+        tvAbout.setText("App Created By Ron Nisenblat");
+        tvEmailMe.setText("Email me Here to: Barvax35@gmail.com");
+
         btnBack.setOnClickListener(view1 -> {
             sounds.playClickBtn();
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.container, MainFragment.newInstance())
                     .commitNow();
         });
-        tvEmailMe.setOnClickListener(view1 -> {
+        emailMe.setOnClickListener(view1 -> {
             Intent mailIntent = new Intent(Intent.ACTION_VIEW);
-            Uri data = Uri.parse("mailto:?subject=Barvax35@gmail.com" + "subject text"+ "&body=" + "body text " + "&to=" + "Barvax35@gmail.com");
+            Uri data = Uri.parse("mailto:?subject=new message from trivia user"  + "&to=" + "Barvax35@gmail.com");
             mailIntent.setData(data);
             startActivity(Intent.createChooser(mailIntent, "Send mail..."));
         });
 
 
+    }
+
+    private void getViews(View view) {
+        emailMe = view.findViewById(R.id.email_me);
+        tvAbout = view.findViewById(R.id.tv_about);
+        tvEmailMe = view.findViewById(R.id.tv_email);
+        btnBack = view.findViewById(R.id.btn_achievment_back);
     }
 
 
