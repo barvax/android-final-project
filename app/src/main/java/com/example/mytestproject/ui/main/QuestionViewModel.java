@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mytestproject.DataManager;
 import com.example.mytestproject.listeners.QuestionResponseListener;
 import com.example.mytestproject.models.QuestionResponse;
 import com.example.mytestproject.repos.TriviaRepository;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class QuestionViewModel extends ViewModel {
     private  MutableLiveData<List<QuestionResponse>> questionsLiveData;
+    private DataManager dataManager;
 
 
     public LiveData<List<QuestionResponse>> getQuestions(String categories, String difficulty){
@@ -29,4 +31,17 @@ public class QuestionViewModel extends ViewModel {
 
         return questionsLiveData;
     }
+
+    public int difficultyLevel(){
+        dataManager = DataManager.getDataManager();
+        if(dataManager.getDifficulty()=="easy"){
+            return 1;
+        }else if(dataManager.getDifficulty()=="medium"){
+            return 2;
+        }else{
+            return 3;
+        }
+    }
+
+
 }

@@ -324,22 +324,14 @@ public class QuestionFragment extends Fragment {
         }.start();
     }
 
-    public int difficultyLevel(){
-        if(dataManager.getDifficulty()=="easy"){
-            return 1;
-        }else if(dataManager.getDifficulty()=="medium"){
-            return 2;
-        }else{
-            return 3;
-        }
-    }
+
     public void endSession(){
 
         DataManager data = DataManager.getDataManager();
         SharedPreferences pref  = getActivity().getSharedPreferences("achievements" , Context.MODE_PRIVATE);
         pref.edit().putInt("highScorePerCategory"+data.getCategoryIndex(),data.getHighScorePerCategory()[data.getCategoryIndex()]).apply();
         pref.edit().putInt("correctAnswersInt",data.getCorrectAnswers()).apply();
-        dataManager.setExp(data.getExp()+ correctAnswers*difficultyLevel());
+        dataManager.setExp(data.getExp()+ correctAnswers* mViewModel.difficultyLevel());
         dataManager.setExpLevel();
         pref.edit().putInt("exp",dataManager.getExp()).apply();
         pref.edit().putInt("level",dataManager.getLevel()).apply();
