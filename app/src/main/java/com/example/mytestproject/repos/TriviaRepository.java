@@ -47,7 +47,7 @@ public class TriviaRepository {
     }
 
     public void getQuestions(QuestionResponseListener listener,String category,String difficulty){
-        Call<List<QuestionResponse>> call = retrofit.getQuestions(7,category,difficulty);
+        Call<List<QuestionResponse>> call = retrofit.getQuestions(20,category,difficulty);
         call.enqueue(new Callback<List<QuestionResponse>>() {
             @Override
             public void onResponse(Call<List<QuestionResponse>> call, Response<List<QuestionResponse>> response) {
