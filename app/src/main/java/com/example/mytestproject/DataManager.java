@@ -6,6 +6,53 @@ public class DataManager {
     private  String difficulty;
     private  String category;
     private int correctAnswers;
+    private  int correctAnswersPerSession;
+    private  int level = 1;
+    private  int nextLevel=100;
+    private int exp;
+
+
+    public void setExpLevel(){
+        nextLevel=level*100;
+        if(exp>nextLevel){
+           setExp(exp-=nextLevel);
+            level++;
+            nextLevel=level*100;
+
+        }
+    }
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getNextLevel() {
+        return nextLevel;
+    }
+
+    public void setNextLevel(int nextLevel) {
+        this.nextLevel = nextLevel;
+    }
+
+    public int getCorrectAnswersPerSession() {
+        return correctAnswersPerSession;
+    }
+
+    public void setCorrectAnswersPerSession(int correctAnswersPerSession) {
+        this.correctAnswersPerSession = correctAnswersPerSession;
+    }
+
     private int[]highScorePerCategory = new int[20];
     private int categoryIndex;
 

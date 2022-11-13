@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
             int correctPerCategory = pref.getInt("highScorePerCategory"+i,0);
             data.setHighScorePerCategory(i,correctPerCategory);
         }
-
-        Log.d("---", "initDataManager: ");
-
+        data.setExp(pref.getInt("exp",0));
+        data.setLevel(pref.getInt("level",0));
+        data.setNextLevel(pref.getInt("nextLevel",0));
     }
 
 

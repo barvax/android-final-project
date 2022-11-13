@@ -1,6 +1,7 @@
 package com.example.mytestproject.ui.main;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.mytestproject.DataManager;
 import com.example.mytestproject.R;
+import com.example.mytestproject.sounds.Sounds;
 
 
 public class DifficultyFragment extends Fragment {
@@ -50,27 +52,43 @@ public class DifficultyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         DataManager data = DataManager.getDataManager();
+        Sounds sounds = new Sounds(getContext());
         btn = view.findViewById(R.id.go_to_question_fragment_btn);
         btn.setEnabled(false);
         tvEasy = view.findViewById(R.id.tv_easy);
         tvMedium = view.findViewById(R.id.tv_mediun);
         tvHard  = view.findViewById(R.id.tv_hard);
         tvEasy.setOnClickListener(view1 -> {
+            sounds.playClickBtn();
             data.setDifficulty("easy");
             btn.setEnabled(true);
+            highlightView(tvEasy);
         });
         tvMedium.setOnClickListener(view1 -> {
+            sounds.playClickBtn();
             data.setDifficulty("medium");
             btn.setEnabled(true);
+            highlightView(tvMedium);
         });
         tvHard.setOnClickListener(view1 -> {
+            sounds.playClickBtn();
             data.setDifficulty("hard");
             btn.setEnabled(true);
+            highlightView(tvHard);
         });
         btn.setOnClickListener(view1 -> {
+            sounds.playClickBtn();
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.container, QuestionFragment.newInstance())
                     .commitNow();
         });
+    }
+
+    public void highlightView(TextView tv){
+
+        tvEasy.setTextColor(Color.parseColor("#393939"));
+        tvMedium.setTextColor(Color.parseColor("#393939"));
+        tvHard.setTextColor(Color.parseColor("#393939"));
+        tv.setTextColor(Color.parseColor("#FFE0B2"));
     }
 }

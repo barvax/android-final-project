@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
-            android:id="@+id/btn_achievement"
+            android:id="@+id/btn_about"
             motion:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp" />
@@ -58,5 +58,12 @@
             android:layout_marginBottom="140dp"
             android:layout_marginEnd="80dp"
             android:layout_marginRight="80dp" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:id="@+id/progressBar2"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent" />
     </ConstraintSet>
 </MotionScene>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".ui.main.QuestionFragment">
 
     <ImageView
@@ -14,61 +15,94 @@
         android:src="@drawable/powersave_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/pass_num_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="164dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/scroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
 
     <TextView
         android:id="@+id/tv_question_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="More Fonts..."
         android:text="num"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/gray"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_the_question"
+        app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
     <TextView
         android:id="@+id/tv_question_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="More Fonts..."
         android:text="category"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_question_num" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_difficulty" />
 
     <TextView
         android:id="@+id/tv_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="More Fonts..."
         android:text="difficulty"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_question_category"
-        app:layout_constraintTop_toBottomOf="@+id/tv_question_num" />
+        app:layout_constraintStart_toStartOf="@+id/imageView14"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
 
     <TextView
         android:id="@+id/tv_the_question"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
-        android:text="TextView"
+        android:fontFamily="More Fonts..."
+        android:text="question"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
+        android:textIsSelectable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_question_category" />
+        app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
     <TextView
         android:id="@+id/tv_answer1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="More Fonts..."
         android:text="Correct"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,10 +110,14 @@
 
     <TextView
         android:id="@+id/tv_answer2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="More Fonts..."
         android:text="bad"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,10 +125,14 @@
 
     <TextView
         android:id="@+id/tv_answer3"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="More Fonts..."
         android:text="bad"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,10 +140,14 @@
 
     <TextView
         android:id="@+id/tv_answer4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="More Fonts..."
         android:text="bad"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +157,7 @@
         android:id="@+id/btn_next_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="14dp"
         android:text="Next Question"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,25 +167,31 @@
         android:id="@+id/tv_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="More Fonts..."
         android:text="TextView"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/end_session_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="home"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:src="@drawable/btn_home"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+        app:layout_constraintEnd_toEndOf="@+id/imageView13"
+        app:layout_constraintStart_toStartOf="@+id/imageView13"
+        app:layout_constraintTop_toTopOf="@+id/imageView13" />
     <Button
         android:id="@+id/help_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="14dp"
         android:text="help"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -153,5 +205,87 @@
         android:text="friend"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/categoty_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/btn_ad_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_question_category"
+        app:layout_constraintStart_toEndOf="@+id/tv_question_category"
+        app:layout_constraintTop_toTopOf="@+id/tv_question_category" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="15dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="fitXY"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:src="@drawable/common_item_hourglass"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_timer"
+        app:layout_constraintEnd_toStartOf="@+id/tv_timer"
+        app:layout_constraintTop_toTopOf="@+id/tv_timer" />
+
+    <ImageView
+        android:id="@+id/first_star"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/gray_star"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_difficulty"
+        app:layout_constraintStart_toEndOf="@+id/tv_difficulty"
+        app:layout_constraintTop_toTopOf="@+id/tv_difficulty" />
+
+    <ImageView
+        android:id="@+id/second_star"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/gray_star"
+        app:layout_constraintBottom_toBottomOf="@+id/first_star"
+        app:layout_constraintStart_toEndOf="@+id/first_star"
+        app:layout_constraintTop_toTopOf="@+id/first_star" />
+
+    <ImageView
+        android:id="@+id/third_star"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/gray_star"
+        app:layout_constraintBottom_toBottomOf="@+id/second_star"
+        app:layout_constraintStart_toEndOf="@+id/second_star"
+        app:layout_constraintTop_toTopOf="@+id/second_star" />
+
+    <ImageView
+        android:id="@+id/corect_answer_bg"
+        android:layout_width="93dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="16dp"
+        android:rotation="0"
+        android:src="@drawable/correct_answer_bg"
+        app:layout_constraintEnd_toEndOf="@+id/imageView13"
+        app:layout_constraintStart_toStartOf="@+id/imageView13"
+        app:layout_constraintTop_toBottomOf="@+id/imageView13"
+        app:srcCompat="@drawable/correct_answer_bg" />
+
+    <TextView
+        android:id="@+id/correct_answer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/calistoga"
+        android:text="99"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/gold"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/corect_answer_bg"
+        app:layout_constraintEnd_toEndOf="@+id/corect_answer_bg"
+        app:layout_constraintStart_toStartOf="@+id/corect_answer_bg"
+        app:layout_constraintTop_toTopOf="@+id/corect_answer_bg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

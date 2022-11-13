@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mytestproject.DataManager;
+import com.example.mytestproject.Images;
 import com.example.mytestproject.MainActivity;
 import com.example.mytestproject.R;
 import com.example.mytestproject.ui.main.DifficultyFragment;
@@ -28,19 +29,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     ArrayList<String> categories;
     Context context;
     DataManager data;
-    int[] categoryImages = {
-        R.drawable.shome_sub_icon_ranking,
-        R.drawable.btn_ad_icon,
-        R.drawable.art,
-        R.drawable.food_drink,
-        R.drawable.language_small_eng,
-        R.drawable.history,
-        R.drawable.general_knolage,
-        R.drawable.music,
-        R.drawable.science,
-        R.drawable.society,
-        R.drawable.sports
-    };
+
 
     public CategoriesAdapter(ArrayList<String> categories) {
         this.categories = categories;
@@ -60,7 +49,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         String testString = categories.get(position);
     holder.tvCategory.setText(testString);
     holder.score.setText("high score: "+String.valueOf(data.getHighScorePerCategory()[position]));
-    holder.rowImg.setImageResource(categoryImages[position]);
+    holder.rowImg.setImageResource(Images.categoryImages[position]);
     holder.tvCategory.setOnClickListener(view -> {
 
         DataManager data = DataManager.getDataManager();

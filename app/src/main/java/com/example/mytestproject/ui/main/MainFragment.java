@@ -9,14 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.example.mytestproject.DataManager;
 import com.example.mytestproject.R;
+import com.example.mytestproject.sounds.Sounds;
 
 public class MainFragment extends Fragment {
 
@@ -24,6 +27,10 @@ public class MainFragment extends Fragment {
     Button nextBtn;
     ImageView achievementBtn;
     private String chosenCategory;
+    TextView level;
+    TextView outOf;
+    DataManager dataManager;
+    ProgressBar progressBar;
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -49,25 +56,30 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Sounds sounds = new Sounds(getContext());
+        dataManager  = DataManager.getDataManager();
+        outOf = view.findViewById(R.id.level_tv_out_of);
+        outOf.setText(String.valueOf(dataManager.getExp())+"/"+String.valueOf(dataManager.getNextLevel()));
+        nextBtn = view.findViewById(R.id.nextBtnFragment1);
+        progressBar=view.findViewById(R.id.progressBar1);
+        level = view.findViewById(R.id.level_tv2);
+        level.setText("level: "+((dataManager.getLevel())));
+        progressBar.setMax(dataManager.getNextLevel());
+        progressBar.setProgress(dataManager.getExp());
 
-//        mViewModel.getCategory().observe(getViewLifecycleOwner(),categoryResponse -> {
-//
-//
-//        });
 
-     nextBtn = view.findViewById(R.id.nextBtnFragment1);
-
-       nextBtn.setOnClickListener(view1 ->{
-
-           getParentFragmentManager().beginTransaction()
-                   .replace(R.id.container, SecondFragment.newInstance())
-                   .commitNow();
-       } );
-
-        achievementBtn = view.findViewById(R.id.btn_achievement);
-        achievementBtn.setOnClickListener(view1 -> {
+        nextBtn.setOnClickListener(view1 ->{
+            sounds.playClickBtn();
             getParentFragmentManager().beginTransaction()
-                    .replace(R.id.container, AchievementFragment.newInstance())
+                    .replace(R.id.container, SecondFragment.newInstance())
+                    .commitNow();
+        } );
+
+        achievementBtn = view.findViewById(R.id.btn_about);
+        achievementBtn.setOnClickListener(view1 -> {
+            sounds.playClickBtn();
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.container, AboutFragment.newInstance())
                     .commitNow();
         });
     }

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +24,10 @@ import android.widget.Toast;
 
 import com.example.mytestproject.CallForHelp;
 import com.example.mytestproject.DataManager;
+import com.example.mytestproject.Images;
 import com.example.mytestproject.R;
 import com.example.mytestproject.models.QuestionResponse;
+import com.example.mytestproject.sounds.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,6 @@ public class QuestionFragment extends Fragment {
     String[] answers;
     TextView[] answersTextView;
     CountDownTimer myTimer;
-
     DataManager dataManager;
     private int questionNum = 0;
     TextView questionNumber;
@@ -52,12 +53,18 @@ public class QuestionFragment extends Fragment {
     TextView answer4;
     TextView timer;
     Button nextQuestionBtn;
-    Button endSessionBtn;
+    ImageView endSessionBtn;
     Button helpBtn;
     Button friendBtn;
-
+    boolean isFriend =true;
+    boolean isHelp =true;
+    ImageView categoryImg;
+    Sounds sounds;
+    ImageView firstStar;
+    ImageView secondStar;
+    ImageView thirdStar;
+    TextView correctAnswerTv;
     int correctAnswers;
-
 
 
 
@@ -80,24 +87,60 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         getViews(view);
         nextQuestionBtn.setEnabled(false);
-
-
         mViewModel.getQuestions(dataManager.getCategory(),dataManager.getDifficulty()).observe(getViewLifecycleOwner(), questionResponses -> {
             questions = new ArrayList<>();
             for (QuestionResponse item : questionResponses) {
                 questions.add(item);
             }
-            setAnswers();
-            shuffleAnswers();
-            showCurrentQuestion();
-            onAnswerClicked();
-            myTimer();
+            initSession();
         });
     }
 
+    public void initSession(){
+
+        category.setText("Category: "+dataManager.getCategory());
+        difficulty.setText("Difficulty: "+dataManager.getDifficulty());
+        categoryImg.setImageResource(Images.categoryImages[dataManager.getCategoryIndex()]);
+        correctAnswerTv.setText(String.valueOf(correctAnswers));
+        setAnswers();
+        shuffleAnswers();
+        showCurrentQuestion();
+        onAnswerClicked();
+        sounds = new Sounds(getContext());
+        myTimer();
+        helpers();
+        nextQuestionBtn.setOnClickListener(view -> {
+            sounds.playClickBtn();
+            nextQuestion();
+        });
+        endSessionBtn.setOnClickListener(view -> {
+            sounds.playClickBtn();
+            myTimer.cancel();
+            endSession();
+        });
+
+    }
+
+    public void helpers(){
+        helpBtn.setOnClickListener(view -> {
+            shootHelpAnswers();
+            isHelp=false;
+            helpBtn.setEnabled(false);
+        });
+        friendBtn.setOnClickListener(view -> {
+            CallForHelp help = new CallForHelp();
+            AlertDialog.Builder z = new AlertDialog.Builder(getContext());
+            z.setTitle("Hi").setMessage( help.friendHelp(getCorrectAnswer()))
+                    .setNegativeButton("Exit",((dialogInterface, i) -> {
+                    }));
+            AlertDialog dialog = z.create();
+            dialog.show();
+            isFriend = false;
+            friendBtn.setEnabled(false);
+        });
+    }
     public void setAnswers(){
         answers = new String[]{
                 questions.get(questionNum).getCorrectAnswer(),
@@ -113,10 +156,7 @@ public class QuestionFragment extends Fragment {
             int rand =  random.nextInt(answers.length);
             answers[i] = answers[rand];
             answers[rand] = temp;
-
         }
-
-
     }
 
     public int getCorrectAnswer(){
@@ -126,41 +166,20 @@ public class QuestionFragment extends Fragment {
                 return i;
             }
         }
-       return 0;
+        return 0;
     }
 
+
+
     public void showCurrentQuestion(){
-        dataManager = DataManager.getDataManager();
-        questionNumber.setText(questionNum+1+"/"+questions.size());
-        category.setText(dataManager.getCategory());
+
+        questionNumber.setText(questionNum+1+" question out of "+questions.size()+" questions");
         question.setText(questions.get(questionNum).getQuestion());
-        difficulty.setText(dataManager.getDifficulty());
+        Images.setStars(firstStar,secondStar,thirdStar,dataManager);
         answer1.setText(answers[0]);
         answer2.setText(answers[1]);
         answer3.setText(answers[2]);
         answer4.setText(answers[3]);
-
-        helpBtn.setOnClickListener(view -> {
-
-            shootHelpAnswers();
-            helpBtn.setEnabled(false);
-
-        });
-
-        friendBtn.setOnClickListener(view -> {
-            CallForHelp help = new CallForHelp();
-            AlertDialog.Builder z = new AlertDialog.Builder(getContext());
-            z.setTitle("wow").setMessage( help.friendHelp(getCorrectAnswer()))
-                    .setNegativeButton("Exit",((dialogInterface, i) -> {
-                    }));
-
-            AlertDialog dialog = z.create();
-            dialog.show();
-//            Button back = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-        friendBtn.setEnabled(false);
-
-        });
-
     }
 
 
@@ -174,53 +193,63 @@ public class QuestionFragment extends Fragment {
 
     }
 
+    public boolean isEndSession(){
+        if(questionNum<questions.size()-1){
+            return true;
+        }
+        return false;
+    }
+    public void startEnsSessionCoroutine(){
+        new CountDownTimer(3000, 1000) {
+
+            public void onTick(long millisUntilFinished) {}
+            public void onFinish() {
+                dataManager.setCorrectAnswersPerSession(correctAnswers);
+                endSession();
+            }
+        }.start();
+    }
 
     private void onAnswerClicked(){
 
         answersTextView = new TextView []{answer1, answer2, answer3, answer4};
         for (int i = 0; i < answers.length; i++) {
-            TextView t = answersTextView[i];
+            TextView answersView = answersTextView[i];
             answersTextView[i].setOnClickListener(view -> {
-                if(t.getText() ==questions.get (questionNum).getCorrectAnswer()){
-
-                    correctAnswers++;
-                    if(dataManager.getCorrectAnswers()<correctAnswers){
-                        dataManager.setCorrectAnswers(correctAnswers);
-                    }
-                    if(dataManager.getHighScorePerCategory()[dataManager.getCategoryIndex()]<correctAnswers){
-                        dataManager.setHighScorePerCategory(dataManager.getCategoryIndex(),correctAnswers);
-                    }
-                    disableAnswers();
-                }else  {
-                    t.setTextColor(Color.parseColor("#e28743"));
-                    disableAnswers();
+                if(answersView.getText() ==questions.get (questionNum).getCorrectAnswer()){
+                    correctAnswer();
+                }else {
+                    wrongAnswer(answersView);
                 }
                 answersTextView[getCorrectAnswer()].setTextColor(Color.parseColor("#38b01e"));
-                if(questionNum<questions.size()-1){
+                friendBtn.setEnabled(false);
+                helpBtn.setEnabled(false);
+                if(isEndSession()){
                     nextQuestionBtn.setEnabled(true);
                 }else {
-//                    Toast.makeText(getContext(), "end.. enter here final summary", Toast.LENGTH_SHORT).show();
-                    CountDownTimer endSession = new CountDownTimer(3000, 1000) {
-
-                        public void onTick(long millisUntilFinished) {
-
-                        }
-
-                        public void onFinish() {
-                            Toast.makeText(getContext(), "ended!", Toast.LENGTH_SHORT).show();
-                        }
-                    }.start();
+                    startEnsSessionCoroutine();
                 }
-
             });
         }
-        nextQuestionBtn.setOnClickListener(view -> {
-            nextQuestion();
-        });
-        endSessionBtn.setOnClickListener(view -> {
-            endSession();
-        });
+    }
 
+    public void correctAnswer(){
+        correctAnswers++;
+        correctAnswerTv.setText(String.valueOf(correctAnswers));
+        sounds.playTrueAnswer();
+        if(dataManager.getCorrectAnswers()<correctAnswers){
+            dataManager.setCorrectAnswers(correctAnswers);
+        }
+        if(dataManager.getHighScorePerCategory()[dataManager.getCategoryIndex()]<correctAnswers){
+            dataManager.setHighScorePerCategory(dataManager.getCategoryIndex(),correctAnswers);
+        }
+        disableAnswers();
+    }
+
+    public void wrongAnswer(TextView textView){
+        textView.setTextColor(Color.parseColor("#e28743"));
+        sounds.playWrongAnswer();
+        disableAnswers();
     }
     private void getViews(View view) {
         dataManager = DataManager.getDataManager();
@@ -237,9 +266,11 @@ public class QuestionFragment extends Fragment {
         endSessionBtn = view.findViewById(R.id.end_session_btn);
         helpBtn = view.findViewById(R.id.help_btn);
         friendBtn = view.findViewById(R.id.friend_btn);
-
-
-
+        categoryImg = view.findViewById(R.id.categoty_image);
+        firstStar = view.findViewById(R.id.first_star);
+        secondStar = view.findViewById(R.id.second_star);
+        thirdStar = view.findViewById(R.id.third_star);
+        correctAnswerTv = view.findViewById(R.id.correct_answer_tv);
     }
 
     public void disableAnswers(){
@@ -258,6 +289,8 @@ public class QuestionFragment extends Fragment {
 
     public void nextQuestion(){
         questionNum++;
+        friendBtn.setEnabled(isFriend);
+        helpBtn.setEnabled(isHelp);
         setAnswers();
         shuffleAnswers();
         showCurrentQuestion();
@@ -267,33 +300,53 @@ public class QuestionFragment extends Fragment {
     }
 
     public  void myTimer(){
+        timer.setTextColor(Color.parseColor("#ffffff"));
         if(myTimer!=null){
             myTimer.cancel();
         }
-       myTimer =  new CountDownTimer(15000, 1000) {
+        myTimer =  new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                timer.setText(String.valueOf (millisUntilFinished / 1000));
+                timer.setText(String.valueOf (millisUntilFinished / 1000)+" sec left");
+                if(millisUntilFinished /1000<6&millisUntilFinished/1000>0){
+                    timer.setTextColor(Color.parseColor("#ff0000"));
+                    if(millisUntilFinished/1000%millisUntilFinished/1000==0){
+                        sounds.playTimeLeftSound();
+                    }
+                }else if(millisUntilFinished /1000==0){
+                    sounds.playErrorSound();
+                }
             }
-
             public void onFinish() {
                 timer.setText("x");
                 nextQuestion();
-
             }
-
         }.start();
     }
 
+    public int difficultyLevel(){
+        if(dataManager.getDifficulty()=="easy"){
+            return 1;
+        }else if(dataManager.getDifficulty()=="medium"){
+            return 2;
+        }else{
+            return 3;
+        }
+    }
     public void endSession(){
 
         DataManager data = DataManager.getDataManager();
         SharedPreferences pref  = getActivity().getSharedPreferences("achievements" , Context.MODE_PRIVATE);
-       pref.edit().putInt("highScorePerCategory"+data.getCategoryIndex(),data.getHighScorePerCategory()[data.getCategoryIndex()]).apply();
+        pref.edit().putInt("highScorePerCategory"+data.getCategoryIndex(),data.getHighScorePerCategory()[data.getCategoryIndex()]).apply();
         pref.edit().putInt("correctAnswersInt",data.getCorrectAnswers()).apply();
+        dataManager.setExp(data.getExp()+ correctAnswers*difficultyLevel());
+        dataManager.setExpLevel();
+        pref.edit().putInt("exp",dataManager.getExp()).apply();
+        pref.edit().putInt("level",dataManager.getLevel()).apply();
+        pref.edit().putInt("nextLevel",dataManager.getNextLevel()).apply();
 
         getParentFragmentManager().beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, SummaryFragment.newInstance())
                 .commitNow();
     }
 }
